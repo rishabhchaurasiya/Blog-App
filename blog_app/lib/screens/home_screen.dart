@@ -34,7 +34,25 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Column(children: []),
+      body: Column(
+        children: [
+          Expanded(
+              child: FirebaseAnimatedList(
+            query: dbRef.child('Post List'),
+            itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                Animation<double> animation, int index) {
+              return Column(
+                children: [
+                  FadeInImage.assetNetwork(
+                      placeholder: 'images/blog.png',
+                    image: ,
+                  )
+                ],
+              );
+            },
+          )),
+        ],
+      ),
     );
   }
 }

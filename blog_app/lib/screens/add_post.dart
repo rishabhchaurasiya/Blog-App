@@ -215,7 +215,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         setState(() {
                           showSpinner = false;
                         });
-                        tostMessages('Post Published');
                       }).onError((error, stackTrace) {
                         setState(() {
                           showSpinner = false;
