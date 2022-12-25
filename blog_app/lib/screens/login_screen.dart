@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:blog_app/screens/forgot_password_screen.dart';
 import 'package:blog_app/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Login Account'),
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
           backwardsCompatibility: false,
         ),
         body: Padding(
@@ -91,6 +92,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(
                           height: 30,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 30),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen(),
+                                  ));
+                            },
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                'Forgot Password?',
+                                style: TextStyle(color: Colors.indigo),
+                              ),
+                            ),
+                          ),
                         ),
                         RoundButton(
                           title: 'Login',

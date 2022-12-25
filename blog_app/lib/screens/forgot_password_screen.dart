@@ -1,27 +1,26 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
-import 'package:blog_app/components/round_button.dart';
-import 'package:blog_app/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+import '../components/round_button.dart';
+
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _SignInState extends State<SignIn> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   bool showSpinner = false;
-  String email = "", password = "";
+  String email = "";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,8 @@ class _SignInState extends State<SignIn> {
       inAsyncCall: showSpinner,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Account'),
+          title: const Text('Forgot Password'),
+          backwardsCompatibility: false,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -37,13 +37,6 @@ class _SignInState extends State<SignIn> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Register',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Form(
@@ -69,50 +62,29 @@ class _SignInState extends State<SignIn> {
                         SizedBox(
                           height: 30,
                         ),
-                        TextFormField(
-                          controller: passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: 'Password',
-                            prefixIcon: Icon(Icons.lock),
-                            border: OutlineInputBorder(),
-                            labelText: 'Password',
-                          ),
-                          onChanged: (value) {
-                            password = value;
-                          },
-                          validator: (value) {
-                            return value!.isEmpty ? 'enter password' : null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
                         RoundButton(
-                          title: 'Register',
+                          title: 'Send Email',
                           onPress: () async {
                             if (_formKey.currentState!.validate()) {
                               setState(() {
                                 showSpinner = true;
                               });
                               try {
-                                final user =
-                                    await _auth.createUserWithEmailAndPassword(
-                                        email: email.toString().trim(),
-                                        password: password.toString().trim());
-                                if (user != null) {
-                                  print('Success');
-                                  tostMessages('User Successfully Created');
+                                _auth
+                                    .sendPasswordResetEmail(
+                                        email: emailController.text.toString())
+                                    .then((value) {
+                                  tostMessages(
+                                      'Please check your email, a reset link has been sent you via email');
                                   setState(() {
                                     showSpinner = false;
                                   });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
-                                      ));
-                                }
+                                }).onError((error, stackTrace) {
+                                  tostMessages(error.toString());
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                });
                               } catch (e) {
                                 print(e.toString());
                                 tostMessages(e.toString());

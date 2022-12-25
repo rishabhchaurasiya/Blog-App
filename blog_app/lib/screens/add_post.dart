@@ -196,12 +196,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
                     try {
                       int date = DateTime.now().microsecondsSinceEpoch;
+
                       firebase_storage.Reference ref = firebase_storage
                           .FirebaseStorage.instance
                           .ref('/blogapp$date');
                       UploadTask uploadTask = ref.putFile(_image!.absolute);
                       await Future.value(uploadTask);
                       var newUrl = await ref.getDownloadURL();
+
                       final User? user = _auth.currentUser;
                       postRef.child('Post List').child(date.toString()).set({
                         'pId': date.toString(),
@@ -210,16 +212,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         'pTitle': titleController.text.toString(),
                         'pDescription': descriptionController.text.toString(),
                         'uEmail': user!.email.toString(),
-                        'uid': user.uid.toString(),
+                        'uid': user!.uid.toString(),
                       }).then((value) {
+                        tostMessages('Post Published');
                         setState(() {
                           showSpinner = false;
                         });
                       }).onError((error, stackTrace) {
+                        tostMessages(error.toString());
                         setState(() {
                           showSpinner = false;
                         });
-                        tostMessages(error.toString());
                       });
                     } catch (e) {
                       setState(() {
