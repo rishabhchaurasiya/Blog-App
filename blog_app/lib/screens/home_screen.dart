@@ -90,20 +90,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 query: dbRef.child('Post List'),
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
-                  // print(snapshot.value);
+                  // Map<String, dynamic> data =
+                  //     snapshot.value as Map<String, dynamic>;
+                  // debugger();
+                  // print(data['uEmail']);
                   // var v = snapshot.value;
                   // print(v);
                   // print('object');
                   // debugger();
                   // if (searchController.text.isEmpty) {
                   return Column(
-                      //   children: [
-                      //     FadeInImage.assetNetwork(
-                      //       placeholder: 'images/blog.png',
-                      //       image: snapshot.value!['pImage'],
-                      //     )
-                      //   ],
-                      );
+                    children: [
+                      // FadeInImage.assetNetwork(
+                      //   placeholder: 'images/blog.png',
+                      //   image: snapshot.value!['pImage'],
+                      // )
+                    ],
+                  );
                   // }else if (){
 
                   // }else{
