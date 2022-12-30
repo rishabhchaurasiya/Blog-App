@@ -106,12 +106,12 @@ class _SignInState extends State<SignIn> {
                                   tostMessages('User Successfully Created');
                                   setState(() {
                                     showSpinner = false;
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomeScreen(),
+                                        ));
                                   });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
-                                      ));
                                 }
                               } catch (e) {
                                 print(e.toString());
@@ -139,8 +139,8 @@ class _SignInState extends State<SignIn> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.SNACKBAR,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.deepOrange,
-        textColor: Colors.indigo,
+        backgroundColor: Colors.indigo,
+        textColor: Colors.white,
         fontSize: 26.0);
   }
 }

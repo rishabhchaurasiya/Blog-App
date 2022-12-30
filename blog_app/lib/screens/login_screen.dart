@@ -130,12 +130,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   tostMessages('User Successfully login');
                                   setState(() {
                                     showSpinner = false;
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomeScreen(),
+                                        ));
                                   });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
-                                      ));
                                 }
                               } catch (e) {
                                 print(e.toString());
@@ -163,8 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.SNACKBAR,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.deepOrange,
-        textColor: Colors.indigo,
+        backgroundColor: Colors.indigo,
+        textColor: Colors.white,
         fontSize: 26.0);
   }
 }

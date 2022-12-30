@@ -12,6 +12,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import 'home_screen.dart';
+
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
 
@@ -205,7 +207,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       var newUrl = await ref.getDownloadURL();
 
                       final User? user = _auth.currentUser;
-                      postRef.child('Post List').child(date.toString()).set({
+                      postRef.child('PostList').child(date.toString()).set({
                         'pId': date.toString(),
                         'pImage': newUrl.toString(),
                         'pTime': date.toString(),
@@ -215,7 +217,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         'uid': user!.uid.toString(),
                       }).then((value) {
                         tostMessages('Post Published');
+
                         setState(() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ));
                           showSpinner = false;
                         });
                       }).onError((error, stackTrace) {
@@ -246,8 +254,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.SNACKBAR,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.deepOrange,
-        textColor: Colors.indigo,
+        backgroundColor: Colors.indigo,
+        textColor: Colors.white,
         fontSize: 26.0);
   }
 }
