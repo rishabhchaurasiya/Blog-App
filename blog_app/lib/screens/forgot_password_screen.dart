@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:blog_app/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -78,6 +79,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                       'Please check your email, a reset link has been sent you via email');
                                   setState(() {
                                     showSpinner = false;
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginScreen(),
+                                        ));
                                   });
                                 }).onError((error, stackTrace) {
                                   tostMessages(error.toString());
